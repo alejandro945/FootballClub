@@ -35,9 +35,25 @@ public abstract class Employee {
         this.salary = salary;
     }
 
-    public String toString() {
-        return "{" + " employeeName='" + getEmployeeName() + "'" + ", employeeId='" + getEmployeeId() + "'"
-                + ", salary='" + getSalary() + "'" + "}";
+    /**
+     * ABSTRACT METHOD
+     */
+    public abstract String showInfo();
+
+    // ---------------Method used to save a few lines of code--------------------
+    /**
+     * Shows the Generic information of each Playlist registered in the app at the
+     * moment <br>
+     * 
+     * @return contents
+     */
+    public String showContents() {
+        String contents = "************* Employee **************\n";
+        contents += "**Name: " + getEmployeeName() + "\n";
+        contents += "**ID: " + getEmployeeId() + "\n";
+        contents += "**Salary: " + getSalary() + "\n";
+        contents += "**************************************\n";
+        return contents;
     }
 
 }

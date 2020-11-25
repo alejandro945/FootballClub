@@ -32,8 +32,17 @@ public class AsistantCoach extends Coach {
     }
 
     @Override
-    public String toString() {
-        return "{" + " soccerProfessional='" + isSoccerProfessional() + "'" + "}";
+    public String showInfo() {
+        String contents = super.showContents();
+        contents += "************* Assitant Coach **************\n";
+        if (getSoccerProfessional()) {
+            contents += "**Soccer Profesional: YES \n";
+        } else {
+            contents += "**Soccer Profesional: NO \n";
+        }
+        contents += "**Expertise: " + getExpertise() + "\n";
+        contents += "**************************************\n";
+        return contents;
     }
 
 }

@@ -3,12 +3,16 @@ package model;
 public class MainCoach extends Coach implements SoccerWorld {
     private int achieveChampionships;
     private int teamsInCharge;
+    private double marketCoachPrice;
+    private double coachLevel;
 
     public MainCoach(String employeeName, int employeeId, int salary, int achieveChampionships, int experienceYears,
             int teamsInCharge) {
         super(employeeName, employeeId, salary, experienceYears);
         this.achieveChampionships = achieveChampionships;
         this.teamsInCharge = teamsInCharge;
+        this.marketCoachPrice = 0;
+        this.coachLevel = 0;
     }
 
     public int getAchieveChampionships() {
@@ -27,6 +31,14 @@ public class MainCoach extends Coach implements SoccerWorld {
         this.teamsInCharge = teamsInCharge;
     }
 
+    public double getMarketCoachPrice() {
+        return this.marketCoachPrice;
+    }
+
+    public double getCoachLevel() {
+        return this.coachLevel;
+    }
+
     public void calculateMarketPrice() {
 
     }
@@ -36,9 +48,15 @@ public class MainCoach extends Coach implements SoccerWorld {
     }
 
     @Override
-    public String toString() {
-        return "{" + " achieveChampionships='" + getAchieveChampionships() + "'" + ", teamsInCharge='"
-                + getTeamsInCharge() + "'" + "}";
+    public String showInfo() {
+        String contents = super.showContents();
+        contents += "************* Main Coach **************\n";
+        contents += "**Achieve Championships: " + getAchieveChampionships() + "\n";
+        contents += "**Teams in charge: " + getTeamsInCharge() + "\n";
+        contents += "**Market Price: " + (int) getMarketCoachPrice() + "\n";
+        contents += "**Level: " + (int) getCoachLevel() + "\n";
+        contents += "**************************************\n";
+        return contents;
     }
 
 }

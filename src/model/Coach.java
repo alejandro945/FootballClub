@@ -16,9 +16,22 @@ public abstract class Coach extends Employee {
         this.experienceYears = experienceYears;
     }
 
-    @Override
-    public String toString() {
-        return "{" + " experienceYears='" + getExperienceYears() + "'" + "}";
+    /**
+     * ABSTRACT METHOD
+     */
+    public abstract String showInfo();
+
+    // ---------------Method used to save a few lines of code--------------------
+    /**
+     * Shows the Generic information of each Playlist registered in the app at the
+     * moment <br>
+     * 
+     * @return contents
+     */
+    public String showContents() {
+        String contents = super.showContents();
+        contents += "**Experience Years: " + getExperienceYears() + "\n";
+        return contents;
     }
 
 }
