@@ -40,11 +40,11 @@ public class MainCoach extends Coach implements SoccerWorld {
     }
 
     public void calculateMarketPrice() {
-
+        this.marketCoachPrice = (getSalary() * 10) + (getExperienceYears() * 100) + (getAchieveChampionships() * 50);
     }
 
     public void calculateLevel() {
-
+        this.coachLevel = 5 + (getAchieveChampionships() / 10);
     }
 
     @Override

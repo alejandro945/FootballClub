@@ -60,11 +60,27 @@ public class Player extends Employee implements SoccerWorld {
     }
 
     public void calculateMarketPrice() {
-
+        if (getPosition() == Position.GOAL_KEEPER) {
+            this.marketPrice = (getSalary() * 12) + (getAverageMark() * 150);
+        } else if (getPosition() == Position.DEFENDER) {
+            this.marketPrice = (getSalary() * 13) + (getAverageMark() * 125) + (getScoredGoals() * 100);
+        } else if (getPosition() == Position.MIDFIELDER) {
+            this.marketPrice = (getSalary() * 14) + (getAverageMark() * 135) + (getScoredGoals() * 120);
+        } else if (getPosition() == Position.FOWARD) {
+            this.marketPrice = (getSalary() * 15) + (getAverageMark() * 145) + (getScoredGoals() * 150);
+        }
     }
 
     public void calculateLevel() {
-
+        if (getPosition() == Position.GOAL_KEEPER) {
+            this.level = (getAverageMark() * 0.9);
+        } else if (getPosition() == Position.DEFENDER) {
+            this.level = (getAverageMark() * 0.9) + (getScoredGoals() / 100);
+        } else if (getPosition() == Position.MIDFIELDER) {
+            this.level = (getAverageMark() * 0.9) + (getScoredGoals() / 90);
+        } else if (getPosition() == Position.FOWARD) {
+            this.level = (getAverageMark() * 0.9) + (getScoredGoals() / 80);
+        }
     }
 
     @Override

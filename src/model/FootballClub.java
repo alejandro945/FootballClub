@@ -3,7 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class FootballClub {
+    private final int ORDER_OFFICES = 6;
     private final int ORDER_ROOM1 = 7;
+    private final int COLUMNS_SIZE_ROOM2 = 7;
+    private final int ROWS_SIZE_ROOM2 = 6;
 
     private String name;
     private int nit;
@@ -21,9 +24,11 @@ public class FootballClub {
         this.name = name;
         this.nit = nit;
         this.fundationDate = fundationDate;
-        team[0] = new Team("A");
-        team[1] = new Team("B");
+        team[0] = new Team("LIVERPOOL");
+        team[1] = new Team("BARCELONA");
+        officeSector = new Coach[ORDER_OFFICES][ORDER_OFFICES];
         dressingRoom1 = new Player[ORDER_ROOM1][ORDER_ROOM1];
+        dressingRoom2 = new Player[COLUMNS_SIZE_ROOM2][ROWS_SIZE_ROOM2];
     }
 
     public String getName() {
@@ -50,6 +55,76 @@ public class FootballClub {
         this.fundationDate = fundationDate;
     }
 
+    public String addCoachToOffice(Coach registeredCoach) {
+        String msg = "No hay oficinas disponibles";
+        boolean asigned = false;
+        for (int i = 0; i < ORDER_OFFICES && !asigned; i++) {
+            for (int j = 0; j < ORDER_OFFICES; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    officeSector[i][j] = registeredCoach;
+                    asigned = true;
+                    msg = "Se ha asignado una oficina exitosamente";
+                } else if (i % 2 != 0 && j % 2 != 0) {
+                    officeSector[i][j] = registeredCoach;
+                    asigned = true;
+                    msg = "Se ha asignado una oficina exitosamente";
+                }
+            }
+        }
+        return msg;
+    }
+
+    public String addPlayerToDressing(Player registeredPlayer, Team registeredTeam) {
+        String msg = "No hay camerinos disponibles";
+        boolean asigned1 = false;
+        boolean asigned2 = false;
+        int render1 = dressingRoom1[0][0].getEmployeeId();
+        int render2 = dressingRoom2[0][0].getEmployeeId();
+        for (int i = 0; i < ORDER_ROOM1 && !asigned1; i++) {
+            for (int j = 0; j < ORDER_ROOM1; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    if (dressingRoom1.length == 0) {
+                        dressingRoom1[i][j] = registeredPlayer;
+                        render1 = dressingRoom1[0][0].getEmployeeId();
+                        asigned1 = true;
+                        msg = "Se ha asignado un vestidor en el camerino 1 exitosamente";
+                    } else if (registeredTeam.getRegPlayer(render1)) {
+                        dressingRoom1[i][j] = registeredPlayer;
+                    }
+                }
+                if (i % 2 != 0 && j % 2 != 0) {
+                    if (registeredTeam.getRegPlayer(render1)) {
+                        dressingRoom1[i][j] = registeredPlayer;
+                        asigned1 = true;
+                        msg = "Se ha asignado un vestidor en el camerino 1 exitosamente";
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < COLUMNS_SIZE_ROOM2 && !asigned2; i++) {
+            for (int j = 0; j < ROWS_SIZE_ROOM2; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    if (dressingRoom2.length == 0) {
+                        dressingRoom2[i][j] = registeredPlayer;
+                        render2 = dressingRoom2[0][0].getEmployeeId();
+                        asigned2 = true;
+                        msg = "Se ha asignado un vestidor en el camerino 2 exitosamente";
+                    } else if (registeredTeam.getRegPlayer(render2)) {
+                        dressingRoom2[i][j] = registeredPlayer;
+                    }
+                }
+                if (i % 2 != 0 && j % 2 != 0) {
+                    if (registeredTeam.getRegPlayer(render2)) {
+                        dressingRoom2[i][j] = registeredPlayer;
+                        asigned2 = true;
+                        msg = "Se ha asignado un vestidor en el camerino 2 exitosamente";
+                    }
+                }
+            }
+        }
+        return msg;
+    }
+
     public boolean searchTeam(String teamName) {
         boolean existT = false;
         for (int i = 0; i < team.length && !existT; i++) {
@@ -69,6 +144,11 @@ public class FootballClub {
             }
         }
         return existE;
+    }
+
+    public boolean searchPlayerInTeam(Team registeredTeam, int employeeId) {
+        boolean existP = registeredTeam.getRegPlayer(employeeId);
+        return existP;
     }
 
     public Employee getEmployee(int employeeId) {
@@ -238,13 +318,50 @@ public class FootballClub {
         return msg;
     }
 
-    public void calculatePlayerPrice() {
-
+    public void employeeCalculates() {
+        for (int i = 0; i < employee.size(); i++) {
+            Employee getEmployee = employee.get(i);
+            if (getEmployee instanceof Player) {
+                Player registeredPlayer = (Player) getEmployee;
+                registeredPlayer.calculateMarketPrice();
+                registeredPlayer.calculateLevel();
+            } else if (getEmployee instanceof MainCoach) {
+                MainCoach registeredMainCoach = (MainCoach) getEmployee;
+                registeredMainCoach.calculateMarketPrice();
+                registeredMainCoach.calculateLevel();
+            }
+        }
     }
 
-    public String toString() {
-        return "{" + " name='" + getName() + "'" + ", nit='" + getNit() + "'" + ", fundationDate='" + getFundationDate()
-                + "'" + "}";
+    public String addLineUp(Team registeredTeam, String lineUpDate, Tactic tactic, String formationA) {
+        String msg = registeredTeam.addLineup(lineUpDate, tactic, formationA);
+        return msg;
     }
 
+    public String showTeams() {
+        String contents = "No hay equipos en la app";
+        for (int i = 0; i < team.length; i++) {
+            contents = team[i].showContents();
+        }
+        return contents;
+    }
+
+    public String showGenericEmployee() {
+        String contents = "No hay empleados registrados";
+        for (int i = 0; i < employee.size(); i++) {
+            Employee getEmployee = employee.get(i);
+            contents = getEmployee.showContents();
+        }
+        return contents;
+    }
+
+    public String showParticularEmployee() {
+        String contents = "No hay empleados registrados";
+        for (int i = 0; i < employee.size(); i++) {
+            Employee getEmployee = employee.get(i);
+            employeeCalculates();
+            contents = getEmployee.showInfo();
+        }
+        return contents;
+    }
 }

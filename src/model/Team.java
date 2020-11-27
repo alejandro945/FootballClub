@@ -52,6 +52,16 @@ public class Team {
         this.player = player;
     }
 
+    public boolean getRegPlayer(int employeeId) {
+        boolean registeredPlayer = false;
+        for (int i = 0; i < player.length; i++) {
+            if (player[i].getEmployeeId() == employeeId) {
+                registeredPlayer = true;
+            }
+        }
+        return registeredPlayer;
+    }
+
     public String addEmployee(Player registeredPlayer) {
         String msg = "No se pudo agregar al jugador";
         boolean space = false;
@@ -136,27 +146,41 @@ public class Team {
         return msg;
     }
 
+    public String addLineup(String lineUpDate, Tactic tactic, String formationA) {
+        String msg = "Se ha agregado exitosamente la nueva alineacion";
+        String[] render = new String[3];
+        render = formationA.split("-");
+        int defenders = Integer.parseInt(render[0]);
+        int midfielders = Integer.parseInt(render[1]);
+        int fowards = Integer.parseInt(render[2]);
+        LineUps newLineUp = new LineUps(lineUpDate, tactic);
+        int[][] formation = newLineUp.addFormation(defenders, midfielders, fowards);
+        newLineUp.lineUpFormat(formation);
+        lineUps.add(newLineUp);
+        return msg;
+    }
+
     public String showContents() {
         String contents = "************* Team **************\n";
         contents += "**Name: " + getTeamName() + "\n";
-        contents += "******* Players *******\n";
         for (int i = 0; i < MAX_SIZE_PLAYER; i++) {
             if (player[i] != null) {
-                contents += "**Player " + (i + 1) + " : " + player[i].getEmployeeName() + "\n" + player[i].showInfo();
+                contents += "**Player " + (i + 1) + "\n" + player[i].showInfo();
             }
         }
-        contents += "******* Main Coach *******\n";
         for (int i = 0; i < MAX_SIZE_MAIN_COACH; i++) {
             if (mainCoach[i] != null) {
-                contents += "**Main Coach: " + mainCoach[i].getEmployeeName() + "\n" + mainCoach[i].showInfo();
+                contents += "**Main Coach: " + "\n" + mainCoach[i].showInfo();
             }
         }
-        contents += "******* Assitant Coaches *******\n";
         for (int i = 0; i < MAX_SIZE_ASISTANT_COACH; i++) {
             if (asistantCoach[i] != null) {
-                contents += "**Assintant Coach " + (i + 1) + " : " + asistantCoach[i].getEmployeeName() + "\n"
-                        + asistantCoach[i].showInfo();
+                contents += "**Assintant Coach " + (i + 1) + "\n" + asistantCoach[i].showInfo();
             }
+        }
+        for (int i = 0; i < lineUps.size(); i++) {
+            LineUps getLineUp = lineUps.get(i);
+            contents += "**LineUp " + (i + 1) + "\n" + getLineUp.showLineUp();
         }
         contents += "**************************************\n";
         return contents;
