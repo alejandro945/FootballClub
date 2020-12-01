@@ -4,9 +4,9 @@ public class AsistantCoach extends Coach {
     private boolean soccerProfessional;
     private Expertise expertise;
 
-    public AsistantCoach(String employeeName, int employeeId, int salary, int experienceYears,
+    public AsistantCoach(String employeeName, int employeeId, int salary, boolean state, int experienceYears,
             boolean soccerProfessional, Expertise expertise) {
-        super(employeeName, employeeId, salary, experienceYears);
+        super(employeeName, employeeId, salary, state, experienceYears);
         this.soccerProfessional = soccerProfessional;
         this.expertise = expertise;
     }
@@ -34,7 +34,7 @@ public class AsistantCoach extends Coach {
     @Override
     public String showInfo() {
         String contents = super.showContents();
-        contents += "************* Assitant Coach **************\n";
+        contents += "********** Assitant Coach ************\n";
         if (getSoccerProfessional()) {
             contents += "**Soccer Profesional: YES \n";
         } else {

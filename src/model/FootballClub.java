@@ -11,14 +11,11 @@ public class FootballClub {
     private String name;
     private int nit;
     private String fundationDate;
-    private Coach[][] officeSector;
+    private Team[] team = new Team[2];
     private ArrayList<Employee> employee = new ArrayList<>();
-    private Team[] team;
+    private Coach[][] officeSector;
     private Player[][] dressingRoom1;
     private Player[][] dressingRoom2;
-
-    public FootballClub() {
-    }
 
     public FootballClub(String name, int nit, String fundationDate) {
         this.name = name;
@@ -63,11 +60,11 @@ public class FootballClub {
                 if (i % 2 == 0 && j % 2 == 0) {
                     officeSector[i][j] = registeredCoach;
                     asigned = true;
-                    msg = "Se ha asignado una oficina exitosamente";
+                    msg = "Se ha asignado una oficina exitosamente al entrenador " + registeredCoach.getEmployeeName();
                 } else if (i % 2 != 0 && j % 2 != 0) {
                     officeSector[i][j] = registeredCoach;
                     asigned = true;
-                    msg = "Se ha asignado una oficina exitosamente";
+                    msg = "Se ha asignado una oficina exitosamente al entrenador " + registeredCoach.getEmployeeName();
                 }
             }
         }
@@ -146,9 +143,17 @@ public class FootballClub {
         return existE;
     }
 
-    public boolean searchPlayerInTeam(Team registeredTeam, int employeeId) {
-        boolean existP = registeredTeam.getRegPlayer(employeeId);
-        return existP;
+    public Team searchPlayerInTeam(int employeeId) {
+        boolean already = false;
+        Team registeredTeam = null;
+        for (int i = 0; i < team.length && !already; i++) {
+            boolean existP = team[i].getRegPlayer(employeeId);
+            if (existP) {
+                registeredTeam = team[i];
+                already = true;
+            }
+        }
+        return registeredTeam;
     }
 
     public Employee getEmployee(int employeeId) {
@@ -207,29 +212,28 @@ public class FootballClub {
         return registeredTeam;
     }
 
-    public String hireEmployee(String employeeName, int employeeId, int salary, int ShirtNumber, int scoredGoals,
-            double averageMark, Position position) {
+    public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int ShirtNumber,
+            Position position) {
         String msg = "Se ha contratado al nuevo jugador: " + employeeName + " exitosamente";
-        Employee newEmployee = new Player(employeeName, employeeId, salary, ShirtNumber, scoredGoals, averageMark,
-                position);
+        Employee newEmployee = new Player(employeeName, employeeId, salary, state, ShirtNumber, position);
         employee.add(newEmployee);
         return msg;
     }
 
-    public String hireEmployee(String employeeName, int employeeId, int salary, int achieveChampionships,
+    public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int achieveChampionships,
             int experienceYears, int teamsInCharge) {
         String msg = "Se ha contratado al nuevo entrenador principal: " + employeeName + " exitosamente";
-        Employee newEmployee = new MainCoach(employeeName, employeeId, salary, achieveChampionships, experienceYears,
-                teamsInCharge);
+        Employee newEmployee = new MainCoach(employeeName, employeeId, salary, state, achieveChampionships,
+                experienceYears, teamsInCharge);
         employee.add(newEmployee);
         return msg;
     }
 
-    public String hireEmployee(String employeeName, int employeeId, int salary, int experienceYears,
+    public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int experienceYears,
             boolean soccerProfessional, Expertise expertise) {
         String msg = "Se ha contratado al nuevo entrenador asistente: " + employeeName + " exitosamente";
-        Employee newEmployee = new AsistantCoach(employeeName, employeeId, salary, experienceYears, soccerProfessional,
-                expertise);
+        Employee newEmployee = new AsistantCoach(employeeName, employeeId, salary, state, experienceYears,
+                soccerProfessional, expertise);
         employee.add(newEmployee);
         return msg;
     }
@@ -240,7 +244,7 @@ public class FootballClub {
             Employee getEmployee = employee.get(i);
             if (getEmployee.getEmployeeId() == employeeId) {
                 employee.remove(i);
-                msg = " Se ha despedido al empleado " + getEmployee.getEmployeeName() + "\n" + " con identificacion "
+                msg = " Se ha despedido al empleado " + getEmployee.getEmployeeName() + " con identificacion "
                         + employeeId;
             }
         }
@@ -248,18 +252,16 @@ public class FootballClub {
     }
 
     public String addEmployeeToTeam(Employee registeredEmployee, Team registeredTeam) {
-        String msg = "";
-        for (int i = 0; i < employee.size(); i++) {
-            if (registeredEmployee instanceof Player) {
-                Player registeredPlayer = (Player) registeredEmployee;
-                msg = registeredTeam.addEmployee(registeredPlayer);
-            } else if (registeredEmployee instanceof MainCoach) {
-                MainCoach registeredMainCoach = (MainCoach) registeredEmployee;
-                msg = registeredTeam.addEmployee(registeredMainCoach);
-            } else if (registeredEmployee instanceof AsistantCoach) {
-                AsistantCoach registeredAsistantCoach = (AsistantCoach) registeredEmployee;
-                msg = registeredTeam.addEmployee(registeredAsistantCoach);
-            }
+        String msg = "ERROR 404";
+        if (registeredEmployee instanceof Player) {
+            Player registeredPlayer = (Player) registeredEmployee;
+            msg = registeredTeam.addEmployee(registeredPlayer);
+        } else if (registeredEmployee instanceof MainCoach) {
+            MainCoach registeredMainCoach = (MainCoach) registeredEmployee;
+            msg = registeredTeam.addEmployee(registeredMainCoach);
+        } else if (registeredEmployee instanceof AsistantCoach) {
+            AsistantCoach registeredAsistantCoach = (AsistantCoach) registeredEmployee;
+            msg = registeredTeam.addEmployee(registeredAsistantCoach);
         }
         return msg;
     }
@@ -279,11 +281,13 @@ public class FootballClub {
         return msg;
     }
 
-    public String setGeneralEmployeeInfo(Employee registeredEmployee, String newName, int newSalary) {
+    public String setGeneralEmployeeInfo(Employee registeredEmployee, String newName, int newSalary,
+            boolean newStatus) {
         String msg = "La informacion suministrada del empleado " + registeredEmployee.getEmployeeName()
                 + " ha sido actualizada";
         registeredEmployee.setEmployeeName(newName);
         registeredEmployee.setSalary(newSalary);
+        registeredEmployee.setState(newStatus);
         return msg;
     }
 
@@ -334,33 +338,58 @@ public class FootballClub {
     }
 
     public String addLineUp(Team registeredTeam, String lineUpDate, Tactic tactic, String formationA) {
-        String msg = registeredTeam.addLineup(lineUpDate, tactic, formationA);
+        int sumPlayers = 0;
+        String msg = "Faltan o hay mas de 10 jugadores en la formacion ";
+        String[] render = formationA.split("-");
+        int[] binary = new int[render.length];
+        int size = 0;
+        for (int i = 0; i < render.length; i++) {
+            binary[i] = Integer.parseInt(render[i]);
+            sumPlayers += Integer.parseInt(render[i]);
+            size++;
+        }
+        if (sumPlayers == 10) {
+            msg = registeredTeam.addLineup(lineUpDate, tactic, binary, size);
+        }
         return msg;
     }
 
     public String showTeams() {
-        String contents = "No hay equipos en la app";
-        for (int i = 0; i < team.length; i++) {
-            contents = team[i].showContents();
+        String contents = "";
+        if (team.length == 0) {
+            contents = "No hay equipos en la app";
+        } else {
+            for (int i = 0; i < team.length; i++) {
+                contents += team[i].showContents();
+            }
         }
+
         return contents;
     }
 
     public String showGenericEmployee() {
-        String contents = "No hay empleados registrados";
-        for (int i = 0; i < employee.size(); i++) {
-            Employee getEmployee = employee.get(i);
-            contents = getEmployee.showContents();
+        String contents = "";
+        if (employee.size() == 0) {
+            contents = "No hay empleados registrados";
+        } else {
+            for (int i = 0; i < employee.size(); i++) {
+                Employee getEmployee = employee.get(i);
+                contents += getEmployee.showContents();
+            }
         }
         return contents;
     }
 
     public String showParticularEmployee() {
-        String contents = "No hay empleados registrados";
-        for (int i = 0; i < employee.size(); i++) {
-            Employee getEmployee = employee.get(i);
-            employeeCalculates();
-            contents = getEmployee.showInfo();
+        String contents = "";
+        if (employee.size() == 0) {
+            contents = "No hay empleados registrados";
+        } else {
+            for (int i = 0; i < employee.size(); i++) {
+                Employee getEmployee = employee.get(i);
+                employeeCalculates();
+                contents += getEmployee.showInfo();
+            }
         }
         return contents;
     }

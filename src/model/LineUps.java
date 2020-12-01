@@ -11,7 +11,7 @@ public class LineUps {
 
     public LineUps(String lineUpDate, Tactic tactic) {
         this.lineUpDate = lineUpDate;
-        formation = new int[COLUMNS_SIZE][ROWS_SIZE];
+        formation = new int[ROWS_SIZE][COLUMNS_SIZE];
         this.tactic = tactic;
     }
 
@@ -55,50 +55,32 @@ public class LineUps {
         this.formationString = formationString;
     }
 
-    public int[][] addFormation(int defenders, int midfielders, int fowards) {
-        for (int i = 0; i < COLUMNS_SIZE; i++) {
-            for (int j = 0; j < ROWS_SIZE; j++) {
+    public int[][] addFormation(int[] render) {
+        for (int i = 0; i < ROWS_SIZE; i++) {
+            for (int j = 0; j < COLUMNS_SIZE; j++) {
                 formation[i][j] = 0;
             }
         }
-        for (int i = 0; i < COLUMNS_SIZE; i++) {
-            for (int j = 0; j < ROWS_SIZE; j++) {
-                if (i == 2 && fowards != 0) {
-                    formation[i][j] = 1;
-                    fowards--;
-                }
-                if (i == 5 && midfielders != 0) {
-                    formation[i][j] = 1;
-                    midfielders--;
-                }
-                if (i == 8 && defenders != 0) {
-                    formation[i][j] = 1;
-                    defenders--;
-                }
+        for (int i = 0; i < ROWS_SIZE && i < render.length; i++) {
+            for (int j = 0; j < COLUMNS_SIZE && render[i] > 0; j++) {
+                formation[i][j] = 1;
+                render[i]--;
             }
         }
         setFormation(formation);
         return formation;
     }
 
-    public void lineUpFormat(int[][] formation) {
-        int defender = 0;
-        int midfielders = 0;
-        int fowards = 0;
-        for (int i = 0; i < COLUMNS_SIZE; i++) {
-            for (int j = 0; j < ROWS_SIZE; j++) {
-                if (i == 2) {
-                    fowards += formation[i][j];
-                }
-                if (i == 5) {
-                    midfielders += formation[i][j];
-                }
-                if (i == 8) {
-                    defender += formation[i][j];
-                }
+    public void lineUpFormat(int[][] formation, int size) {
+        int[] render = new int[size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < COLUMNS_SIZE; j++) {
+                render[i] += formation[i][j];
             }
         }
-        String formationString = defender + "-" + midfielders + "-" + fowards;
+        for (int i = 0; i < render.length; i++) {
+            formationString += render[i] + "-";
+        }
         setFormationString(formationString);
     }
 
@@ -109,8 +91,8 @@ public class LineUps {
         contents += "*****Formation*****\n";
         contents += "**" + getFormationString() + "**" + "\n";
         if (formation.length != 0) {
-            for (int i = 0; i < COLUMNS_SIZE; i++) {
-                for (int j = 0; j < ROWS_SIZE; j++) {
+            for (int i = 0; i < ROWS_SIZE; i++) {
+                for (int j = 0; j < COLUMNS_SIZE; j++) {
                     contents += formation[i][j] + " ";
                 }
                 contents += "\n";

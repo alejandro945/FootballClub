@@ -8,12 +8,11 @@ public class Player extends Employee implements SoccerWorld {
     private double marketPrice;
     private double level;
 
-    public Player(String employeeName, int employeeId, int salary, int ShirtNumber, int scoredGoals, double averageMark,
-            Position position) {
-        super(employeeName, employeeId, salary);
+    public Player(String employeeName, int employeeId, int salary, boolean state, int ShirtNumber, Position position) {
+        super(employeeName, employeeId, salary, state);
         this.ShirtNumber = ShirtNumber;
-        this.scoredGoals = scoredGoals;
-        this.averageMark = averageMark;
+        this.scoredGoals = 0;
+        this.averageMark = 0;
         this.position = position;
         this.marketPrice = 0;
         this.level = 0;
@@ -86,7 +85,7 @@ public class Player extends Employee implements SoccerWorld {
     @Override
     public String showInfo() {
         String contents = super.showContents();
-        contents += "************* Player **************\n";
+        contents += "************* Player ****************\n";
         contents += "**Shirt Number: " + getShirtNumber() + "\n";
         contents += "**Goals: " + getScoredGoals() + "\n";
         contents += "**Average Mark: " + getAverageMark() + "\n";

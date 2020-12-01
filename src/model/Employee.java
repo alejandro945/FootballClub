@@ -4,11 +4,13 @@ public abstract class Employee {
     private String employeeName;
     private int employeeId;
     private int salary;
+    private boolean state;
 
-    public Employee(String employeeName, int employeeId, int salary) {
+    public Employee(String employeeName, int employeeId, int salary, boolean state) {
         this.employeeName = employeeName;
         this.employeeId = employeeId;
         this.salary = salary;
+        this.state = state;
     }
 
     public String getEmployeeName() {
@@ -35,6 +37,14 @@ public abstract class Employee {
         this.salary = salary;
     }
 
+    public boolean getState() {
+        return this.state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
     /**
      * ABSTRACT METHOD
      */
@@ -52,6 +62,11 @@ public abstract class Employee {
         contents += "**Name: " + getEmployeeName() + "\n";
         contents += "**ID: " + getEmployeeId() + "\n";
         contents += "**Salary: " + getSalary() + "\n";
+        if (getState()) {
+            contents += "**Status: ACTIVE\n";
+        } else {
+            contents += "**Status: INACTIVE\n";
+        }
         contents += "**************************************\n";
         return contents;
     }

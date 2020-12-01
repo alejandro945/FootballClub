@@ -6,9 +6,9 @@ public class MainCoach extends Coach implements SoccerWorld {
     private double marketCoachPrice;
     private double coachLevel;
 
-    public MainCoach(String employeeName, int employeeId, int salary, int achieveChampionships, int experienceYears,
-            int teamsInCharge) {
-        super(employeeName, employeeId, salary, experienceYears);
+    public MainCoach(String employeeName, int employeeId, int salary, boolean state, int achieveChampionships,
+            int experienceYears, int teamsInCharge) {
+        super(employeeName, employeeId, salary, state, experienceYears);
         this.achieveChampionships = achieveChampionships;
         this.teamsInCharge = teamsInCharge;
         this.marketCoachPrice = 0;

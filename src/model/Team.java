@@ -68,7 +68,7 @@ public class Team {
         for (int i = 0; i < player.length && !space; i++) {
             if (player[i] == null) {
                 player[i] = registeredPlayer;
-                msg = "El jugador " + player[i].getEmployeeName() + " ha sido agregado exitosamente al equipo"
+                msg = "El jugador " + player[i].getEmployeeName() + " ha sido agregado exitosamente al equipo "
                         + getTeamName();
                 space = true;
             }
@@ -83,7 +83,7 @@ public class Team {
             if (mainCoach[i] == null) {
                 mainCoach[i] = registeredMainCoach;
                 msg = "El entrenador principal " + mainCoach[i].getEmployeeName()
-                        + " ha sido agregado exitosamente al equipo" + getTeamName();
+                        + " ha sido agregado exitosamente al equipo " + getTeamName();
                 space = true;
             }
         }
@@ -97,7 +97,7 @@ public class Team {
             if (asistantCoach[i] == null) {
                 asistantCoach[i] = registeredAsistantCoach;
                 msg = "El entrenador asistente " + asistantCoach[i].getEmployeeName()
-                        + " ha sido agregado exitosamente al equipo" + getTeamName();
+                        + " ha sido agregado exitosamente al equipo " + getTeamName();
                 space = true;
             }
         }
@@ -105,9 +105,9 @@ public class Team {
     }
 
     public String removeEmployee(Player registeredPlayer) {
-        String msg = "No se pudo eliminar al jugador";
+        String msg = "El jugador " + registeredPlayer.getEmployeeName() + " no se encuentra dentro del equipo";
         boolean space = false;
-        for (int i = 0; i < player.length && !space; i++) {
+        for (int i = 0; i < MAX_SIZE_PLAYER && !space; i++) {
             if (player[i] == registeredPlayer) {
                 player[i] = null;
                 msg = "El jugador " + player[i].getEmployeeName() + " ha sido eliminado exitosamente del equipo"
@@ -119,9 +119,10 @@ public class Team {
     }
 
     public String removeEmployee(MainCoach registeredMainCoach) {
-        String msg = "No se pudo eliminar al entrenador principal";
+        String msg = "El entrenador principal " + registeredMainCoach.getEmployeeName()
+                + " no se encuentra dentro del equipo";
         boolean space = false;
-        for (int i = 0; i < mainCoach.length && !space; i++) {
+        for (int i = 0; i < MAX_SIZE_MAIN_COACH && !space; i++) {
             if (mainCoach[i] == registeredMainCoach) {
                 mainCoach[i] = null;
                 msg = "El entrenador principal " + mainCoach[i].getEmployeeName()
@@ -133,9 +134,10 @@ public class Team {
     }
 
     public String removeEmployee(AsistantCoach registeredAsistantCoach) {
-        String msg = "No se pudo eliminar al entrenador asistente";
+        String msg = "El entrenador asistente " + registeredAsistantCoach.getEmployeeName()
+                + " no se encuentra dentro del equipo";
         boolean space = false;
-        for (int i = 0; i < asistantCoach.length && !space; i++) {
+        for (int i = 0; i < MAX_SIZE_ASISTANT_COACH && !space; i++) {
             if (asistantCoach[i] == registeredAsistantCoach) {
                 asistantCoach[i] = null;
                 msg = "El entrenador asistente " + asistantCoach[i].getEmployeeName()
@@ -146,22 +148,17 @@ public class Team {
         return msg;
     }
 
-    public String addLineup(String lineUpDate, Tactic tactic, String formationA) {
+    public String addLineup(String lineUpDate, Tactic tactic, int[] formationA, int size) {
         String msg = "Se ha agregado exitosamente la nueva alineacion";
-        String[] render = new String[3];
-        render = formationA.split("-");
-        int defenders = Integer.parseInt(render[0]);
-        int midfielders = Integer.parseInt(render[1]);
-        int fowards = Integer.parseInt(render[2]);
         LineUps newLineUp = new LineUps(lineUpDate, tactic);
-        int[][] formation = newLineUp.addFormation(defenders, midfielders, fowards);
-        newLineUp.lineUpFormat(formation);
+        int[][] formation = newLineUp.addFormation(formationA);
+        newLineUp.lineUpFormat(formation, size);
         lineUps.add(newLineUp);
         return msg;
     }
 
     public String showContents() {
-        String contents = "************* Team **************\n";
+        String contents = "*************** Team ****************\n";
         contents += "**Name: " + getTeamName() + "\n";
         for (int i = 0; i < MAX_SIZE_PLAYER; i++) {
             if (player[i] != null) {
