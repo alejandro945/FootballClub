@@ -22,11 +22,11 @@ public class Menu {
         System.out.println("MENU PRINCIPAL: Elija una opcion segun su requerimiento");
         System.out.println("-------------------------------MANEJO DE EMPLEADOS-------------------------------");
         System.out.println("(1) Para contratar un nuevo empleado al club");
-        System.out.println("(2) Para despedir un empleado al club");
+        System.out.println("(2) Para despedir un empleado del club");
         System.out.println("--------------------------------MANEJO DE EQUIPOS---------------------------------");
-        System.out.println("(3) Para agregar un empleado a equipo");
-        System.out.println("(4) Para remover un empleado de equipo");
-        System.out.println("(5) Para agregar alineaciones al equipo");
+        System.out.println("(3) Para agregar un empleado a un equipo");
+        System.out.println("(4) Para remover un empleado de un equipo");
+        System.out.println("(5) Para agregar alineaciones del equipo");
         System.out.println("-------------------------------ACTUALIZAR INFORMACION----------------------------");
         System.out.println("(6) Para actualizar informacion general de empleados");
         System.out.println("(7) Para actualizar informacion particular de empleados");
@@ -238,6 +238,7 @@ public class Menu {
         if (existE) {
             Employee registeredEmployee = footballClub.getEmployee(employeeId);
             System.out.println("Ingrese el nuevo nombre del empleado");
+            sc.nextLine();
             String newName = sc.nextLine();
             System.out.println("Ingrese el nuevo salario del empleado");
             int newSalary = sc.nextInt();
@@ -329,6 +330,28 @@ public class Menu {
         return msg;
     }
 
+    public String showParticularTeam() {
+        String msg = "No se ha encontrado un equipo con ese nombre en el club";
+        System.out.println("Ingrese el nombre del equipo a mostrar");
+        String teamName = sc.nextLine();
+        boolean existT = footballClub.searchTeam(teamName);
+        if (existT) {
+            msg = footballClub.showParticularTeam(teamName);
+        }
+        return msg;
+    }
+
+    public String showParticularEmployee() {
+        String msg = "No se ha encontrado un empleado con la identificacion suministrada";
+        System.out.println("Ingrese el identificador del empleado");
+        int employeeId = sc.nextInt();
+        boolean existE = footballClub.searchEmployee(employeeId);
+        if (existE) {
+            msg = footballClub.showParticularEmployee(employeeId);
+        }
+        return msg;
+    }
+
     public String assingOffice() {
         String msg = "No se ha encontrado un entrenador con la identificacion suministrada";
         System.out.println("Ingrese el identificador del entrenador");
@@ -351,7 +374,7 @@ public class Menu {
         boolean existE = footballClub.searchEmployee(employeeId);
         Player registeredPlayer = footballClub.getPlayer(employeeId);
         Team registeredTeam = footballClub.searchPlayerInTeam(employeeId);
-        if (existE && registeredPlayer != null && registeredTeam != null) {
+        if (existE & registeredPlayer != null & registeredTeam != null) {
             msg = footballClub.addPlayerToDressing(registeredPlayer, registeredTeam);
         }
         return msg;
@@ -387,12 +410,19 @@ public class Menu {
                 System.out.println(setParticularInfo());
                 break;
             case 8:
-
+                System.out.println(footballClub.showClub());
+                break;
             case 9:
                 System.out.println(footballClub.showTeams());
                 break;
             case 10:
-                System.out.println(footballClub.showParticularEmployee());
+                System.out.println(footballClub.showEmployees());
+                break;
+            case 11:
+                System.out.println(showParticularTeam());
+                break;
+            case 12:
+                System.out.println(showParticularEmployee());
                 break;
             case 13:
                 System.out.println(assingOffice());

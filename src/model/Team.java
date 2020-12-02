@@ -55,8 +55,10 @@ public class Team {
     public boolean getRegPlayer(int employeeId) {
         boolean registeredPlayer = false;
         for (int i = 0; i < player.length; i++) {
-            if (player[i].getEmployeeId() == employeeId) {
-                registeredPlayer = true;
+            if (player[i] != null) {
+                if (player[i].getEmployeeId() == employeeId) {
+                    registeredPlayer = true;
+                }
             }
         }
         return registeredPlayer;
@@ -152,7 +154,7 @@ public class Team {
         String msg = "Se ha agregado exitosamente la nueva alineacion";
         LineUps newLineUp = new LineUps(lineUpDate, tactic);
         int[][] formation = newLineUp.addFormation(formationA);
-        newLineUp.lineUpFormat(formation, size);
+        newLineUp.lineUpFormat(formation);
         lineUps.add(newLineUp);
         return msg;
     }

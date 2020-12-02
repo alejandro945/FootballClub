@@ -6,7 +6,6 @@ public class LineUps {
 
     private String lineUpDate;
     private int[][] formation;
-    private String formationString;
     private Tactic tactic;
 
     public LineUps(String lineUpDate, Tactic tactic) {
@@ -39,49 +38,76 @@ public class LineUps {
         this.tactic = tactic;
     }
 
-    public int getCOLUMNS_SIZE() {
-        return this.COLUMNS_SIZE;
-    }
-
-    public int getROWS_SIZE() {
-        return this.ROWS_SIZE;
-    }
-
-    public String getFormationString() {
-        return this.formationString;
-    }
-
-    public void setFormationString(String formationString) {
-        this.formationString = formationString;
-    }
-
     public int[][] addFormation(int[] render) {
         for (int i = 0; i < ROWS_SIZE; i++) {
             for (int j = 0; j < COLUMNS_SIZE; j++) {
                 formation[i][j] = 0;
             }
         }
-        for (int i = 0; i < ROWS_SIZE && i < render.length; i++) {
-            for (int j = 0; j < COLUMNS_SIZE && render[i] > 0; j++) {
-                formation[i][j] = 1;
-                render[i]--;
+        int z = 0;
+        if (render.length == 1 || render.length == 2) {
+            z = 5;
+        } else if (render.length == 3 || render.length == 4) {
+            z = 6;
+        } else if (render.length == 5 || render.length == 6) {
+            z = 7;
+        } else if (render.length == 7 || render.length == 8) {
+            z = 8;
+        } else if (render.length == 9 || render.length == 10) {
+            z = 9;
+        }
+        int i = 0;
+        while (i < render.length) {
+            int count = 0;
+            if (render[i] % 2 == 0) {
+                count = 1;
+                int j = 4;
+                while (j < COLUMNS_SIZE && render[i] > 0) {
+                    formation[z][j] = 1;
+                    count++;
+                    if (count % 2 == 0) {
+                        j = j - count;
+                    } else if (count % 2 != 0) {
+                        j = j + count;
+                    }
+                    render[i]--;
+                }
+            } else if (render[i] % 2 != 0) {
+                int j = 3;
+                while (j < COLUMNS_SIZE && render[i] > 0) {
+                    formation[z][j] = 1;
+                    count++;
+                    if (count % 2 == 0) {
+                        j = j - count;
+                    } else if (count % 2 != 0) {
+                        j = j + count;
+                    }
+                    render[i]--;
+                }
             }
+            i++;
+            z--;
         }
         setFormation(formation);
         return formation;
     }
 
-    public void lineUpFormat(int[][] formation, int size) {
-        int[] render = new int[size];
-        for (int i = 0; i < size; i++) {
+    public String lineUpFormat(int[][] formation) {
+        String formationString = "";
+        int[] nativ = new int[10];
+        for (int i = 9; i >= 0; i--) {
             for (int j = 0; j < COLUMNS_SIZE; j++) {
-                render[i] += formation[i][j];
+                nativ[i] += formation[i][j];
             }
         }
-        for (int i = 0; i < render.length; i++) {
-            formationString += render[i] + "-";
+        for (int i = 9; i >= 0; i--) {
+            if (nativ[i] != 0) {
+                formationString += nativ[i] + "-";
+            }
+
         }
-        setFormationString(formationString);
+        formationString = formationString.substring(0, formationString.length() - 1);
+        return formationString;
     }
 
     public String showLineUp() {
@@ -89,7 +115,7 @@ public class LineUps {
         contents += "**Date: " + getLineUpDate() + "\n";
         contents += "**Tactic: " + getTactic() + "\n";
         contents += "*****Formation*****\n";
-        contents += "**" + getFormationString() + "**" + "\n";
+        contents += "**" + lineUpFormat(formation) + "**" + "\n";
         if (formation.length != 0) {
             for (int i = 0; i < ROWS_SIZE; i++) {
                 for (int j = 0; j < COLUMNS_SIZE; j++) {
@@ -98,7 +124,7 @@ public class LineUps {
                 contents += "\n";
             }
         }
-        contents += "**************************";
+        contents += "**************************\n";
         return contents;
     }
 }
