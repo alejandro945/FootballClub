@@ -183,7 +183,7 @@ public class Menu {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada o un equipo con ese nombre";
         System.out.println("Ingrese el identificador del empleado");
         int employeeId = sc.nextInt();
-        System.out.println("Ingrese el nombre del equipo que lo agregara");
+        System.out.println("Ingrese el nombre del equipo al que pertenece");
         sc.nextLine();
         String teamName = sc.nextLine();
         boolean existE = footballClub.searchEmployee(employeeId);

@@ -110,10 +110,10 @@ public class Team {
         String msg = "El jugador " + registeredPlayer.getEmployeeName() + " no se encuentra dentro del equipo";
         boolean space = false;
         for (int i = 0; i < MAX_SIZE_PLAYER && !space; i++) {
-            if (player[i] == registeredPlayer) {
-                player[i] = null;
-                msg = "El jugador " + player[i].getEmployeeName() + " ha sido eliminado exitosamente del equipo"
+            if (player[i] != null && player[i] == registeredPlayer) {
+                msg = "El jugador " + player[i].getEmployeeName() + " ha sido eliminado exitosamente del equipo "
                         + getTeamName();
+                player[i] = null;
                 space = true;
             }
         }
@@ -125,11 +125,13 @@ public class Team {
                 + " no se encuentra dentro del equipo";
         boolean space = false;
         for (int i = 0; i < MAX_SIZE_MAIN_COACH && !space; i++) {
-            if (mainCoach[i] == registeredMainCoach) {
-                mainCoach[i] = null;
-                msg = "El entrenador principal " + mainCoach[i].getEmployeeName()
-                        + " ha sido eliminado exitosamente del equipo" + getTeamName();
-                space = true;
+            if (mainCoach[i] != null) {
+                if (mainCoach[i] == registeredMainCoach) {
+                    msg = "El entrenador principal " + mainCoach[i].getEmployeeName()
+                            + " ha sido eliminado exitosamente del equipo " + getTeamName();
+                    mainCoach[i] = null;
+                    space = true;
+                }
             }
         }
         return msg;
@@ -140,11 +142,13 @@ public class Team {
                 + " no se encuentra dentro del equipo";
         boolean space = false;
         for (int i = 0; i < MAX_SIZE_ASISTANT_COACH && !space; i++) {
-            if (asistantCoach[i] == registeredAsistantCoach) {
-                asistantCoach[i] = null;
-                msg = "El entrenador asistente " + asistantCoach[i].getEmployeeName()
-                        + " ha sido eliminado exitosamente del equipo" + getTeamName();
-                space = true;
+            if (asistantCoach[i] != null) {
+                if (asistantCoach[i] == registeredAsistantCoach) {
+                    msg = "El entrenador asistente " + asistantCoach[i].getEmployeeName()
+                            + " ha sido eliminado exitosamente del equipo " + getTeamName();
+                    asistantCoach[i] = null;
+                    space = true;
+                }
             }
         }
         return msg;
