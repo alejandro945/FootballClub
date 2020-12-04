@@ -8,6 +8,9 @@ public class Player extends Employee implements SoccerWorld {
     private double marketPrice;
     private double level;
 
+    /**
+     * The constructor method of a Player Object<br>
+     */
     public Player(String employeeName, int employeeId, int salary, boolean state, int ShirtNumber, Position position) {
         super(employeeName, employeeId, salary, state);
         this.ShirtNumber = ShirtNumber;
@@ -18,46 +21,96 @@ public class Player extends Employee implements SoccerWorld {
         this.level = 0;
     }
 
+    /**
+     * Gets the shirt number of the player <br>
+     * 
+     * @return ShirtNumber
+     */
     public int getShirtNumber() {
         return this.ShirtNumber;
     }
 
+    /**
+     * Sets the shirt number of the player <br>
+     * 
+     * @param ShirtNumber != String
+     */
     public void setShirtNumber(int ShirtNumber) {
         this.ShirtNumber = ShirtNumber;
     }
 
+    /**
+     * Gets the Scored Goals of the player <br>
+     * 
+     * @return scoredGoals
+     */
     public int getScoredGoals() {
         return this.scoredGoals;
     }
 
+    /**
+     * Sets the Scored Goals of the player <br>
+     * 
+     * @param scoredGoals != String
+     */
     public void setScoredGoals(int scoredGoals) {
         this.scoredGoals = scoredGoals;
     }
 
+    /**
+     * Gets the average mark of the player <br>
+     * 
+     * @return averageMark
+     */
     public double getAverageMark() {
         return this.averageMark;
     }
 
+    /**
+     * Sets the average mark of the player <br>
+     * 
+     * @param averageMark != String
+     */
     public void setAverageMark(double averageMark) {
         this.averageMark = averageMark;
     }
 
+    /**
+     * @return Position
+     */
     public Position getPosition() {
         return this.position;
     }
 
+    /**
+     * @param position
+     */
     public void setPosition(Position position) {
         this.position = position;
     }
 
+    /**
+     * Gets the market price of the player <br>
+     * 
+     * @return marketPrice
+     */
     public double getMarketPrice() {
         return this.marketPrice;
     }
 
+    /**
+     * Gets the level of the player <br>
+     * 
+     * @return level
+     */
     public double getLevel() {
         return this.level;
     }
 
+    /**
+     * Calculates the market price of the player with criteria-based
+     * counterproductive <br>
+     */
     public void calculateMarketPrice() {
         if (getPosition() == Position.GOAL_KEEPER) {
             this.marketPrice = (getSalary() * 12) + (getAverageMark() * 150);
@@ -70,6 +123,9 @@ public class Player extends Employee implements SoccerWorld {
         }
     }
 
+    /**
+     * Calculates the level of the player with criteria-based counterproductive <br>
+     */
     public void calculateLevel() {
         if (getPosition() == Position.GOAL_KEEPER) {
             this.level = (getAverageMark() * 0.9);
@@ -82,6 +138,12 @@ public class Player extends Employee implements SoccerWorld {
         }
     }
 
+    /**
+     * Shows the Particular information of each Player registered in the app at the
+     * moment <br>
+     * 
+     * @return contents
+     */
     @Override
     public String showInfo() {
         String contents = super.showContents();

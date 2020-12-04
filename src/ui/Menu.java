@@ -9,7 +9,7 @@ public class Menu {
     private FootballClub footballClub;
 
     /**
-     * The constructor method of the menu Object<br>
+     * The constructor method of the menu Object <br>
      */
     public Menu() {
         this.footballClub = new FootballClub("Swift Club", 900735894, "11 de abril de 1950");
@@ -31,7 +31,7 @@ public class Menu {
         System.out.println("(6) Para actualizar informacion general de empleados");
         System.out.println("(7) Para actualizar informacion particular de empleados");
         System.out.println("---------------------------------MOSTRAR GENERAL---------------------------------");
-        System.out.println("(8) Para mostrar informacion de todo el club");
+        System.out.println("(8) Para mostrar informacion de todo el club(Instalaciones etc...)");
         System.out.println("(9) Para mostrar los equipos del club");
         System.out.println("(10) Para mostrar los empleados del club");
         System.out.println("-------------------------------MOSTRAR PARTICULAR--------------------------------");
@@ -40,14 +40,16 @@ public class Menu {
         System.out.println("----------------------------------INSTALACIONES----------------------------------");
         System.out.println("(13) Para asignar oficinas");
         System.out.println("(14) Para asignar vestuarios");
+        System.out.println("-------------------------------------VARIOS--------------------------------------");
+        System.out.println("(15) Para mostrar alineaciones");
         System.out.println("-----------------------------------SALIR-----------------------------------------");
-        System.out.println("(15) Salir de App");
+        System.out.println("(16) Salir de App");
     }
 
     /**
      * Reads the option entered by console <br>
      * <b> pre: </b> Positive integer number which is diferent to String and 1 less
-     * than or equal to choice less than or equal to 8 <br>
+     * than or equal to choice less than or equal to 15 <br>
      * <b> post: </b> It will return an int for its corresponding use <br>
      * 
      * @return choice
@@ -60,11 +62,12 @@ public class Menu {
 
     /**
      * Reads or captures the pertinent information for setting a employee up <br>
-     * <b> pre: </b> 1<= state <=2 <br>
+     * <b> pre: </b> General Case: 1<= state <=2, Type Case: 1<= type <=3, Player
+     * case: 1<= pos <=4, Assitant Coach Case: 1<= pfs <=2 and 1<= exp <=4 <br>
      * <b> post: </b> It will hire an employee and will return a String message
      * indicating the status of the request <br>
      * 
-     * @return String
+     * @return String Request status message
      */
     public String readEmployee() {
         String msg = "El identificador del empleado ya ha sido registrado";
@@ -151,6 +154,14 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Remove an specific employee object form the arraylist <br>
+     * <b> pre: </b> employeeId != String <br>
+     * <b> post: </b> It will fire an employee with the same id recently entered by
+     * console <br>
+     * 
+     * @return String Request status message
+     */
     public String fireEmployee() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada";
         System.out.println("Ingrese el identificador del empleado");
@@ -162,6 +173,15 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Add an employee object following the size conditions into an specific team
+     * <br>
+     * <b> pre: </b> employeeId != String <br>
+     * <b> post: </b> This method will add an employee, at the same time of sending
+     * a feedback of the user request. <br>
+     * 
+     * @return String Request status message
+     */
     public String addEmployeeToTeam() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada o un equipo con ese nombre";
         System.out.println("Ingrese el identificador del empleado");
@@ -179,6 +199,14 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Remove an Employee already registered in a specific team <br>
+     * <b> pre: </b> employeeId != String <br>
+     * <b> post: </b> This method will remove an employee object previously added
+     * <br>
+     * 
+     * @return String Request status message
+     */
     public String removeEmployeeFromTeam() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada o un equipo con ese nombre";
         System.out.println("Ingrese el identificador del empleado");
@@ -196,6 +224,13 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Add a lineup in a particular team <br>
+     * <b> post: </b> This method will add a lineup with all the requirements for
+     * this case. <br>
+     * 
+     * @return String Request status message
+     */
     public String addLineUpToTeam() {
         String msg = "No se ha encontrado un equipo con ese nombre en el club";
         System.out.println("Ingrese el nombre del equipo que lo agregara");
@@ -230,6 +265,14 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Its function is to update the general information of the identified user <br>
+     * <b> pre: </b> employeeId != String <br>
+     * <b> post: <b> Updates the general information entered by the user in said
+     * iteration <br>
+     * 
+     * @return String Request status message
+     */
     public String setGeneralInfo() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada";
         System.out.println("Ingrese el identificador del empleado");
@@ -253,6 +296,15 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Its function is to update the particular information of the identified user
+     * <br>
+     * <b> pre: </b> employeeId != String <br>
+     * <b> post: <b> Updates the particular information entered by the user in said
+     * iteration. It should be noted that we use downcasting <br>
+     * 
+     * @return String Request status message
+     */
     public String setParticularInfo() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada";
         System.out.println("Ingrese el identificador del empleado");
@@ -330,6 +382,12 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Shows the Particular information of an identified team registered in the app
+     * <br>
+     * 
+     * @return String Request status message
+     */
     public String showParticularTeam() {
         String msg = "No se ha encontrado un equipo con ese nombre en el club";
         System.out.println("Ingrese el nombre del equipo a mostrar");
@@ -341,6 +399,13 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Shows the Particular information of an identified employee registered in the
+     * app <br>
+     * <b> pre: </b> employeeId != String <br>
+     * 
+     * @return String Request status message
+     */
     public String showParticularEmployee() {
         String msg = "No se ha encontrado un empleado con la identificacion suministrada";
         System.out.println("Ingrese el identificador del empleado");
@@ -352,6 +417,13 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Assigns an office to a Coach, taking into account the protocols or conditions
+     * of the pandemic, in other words an office in between <br>
+     * <b> pre: </b> employeeId != String <br>
+     * 
+     * @return String Request status message
+     */
     public String assingOffice() {
         String msg = "No se ha encontrado un entrenador con la identificacion suministrada";
         System.out.println("Ingrese el identificador del entrenador");
@@ -367,6 +439,15 @@ public class Menu {
         return msg;
     }
 
+    /**
+     * Assigns a locker to a player, taking into account the protocols or conditions
+     * of the pandemic, in other words a locker in between. It is important to
+     * mention that in the hypothetical case that a player from team 1 is in
+     * dressing room 1, a player from team 2 will not be able to enter it <br>
+     * <b> pre: </b> employeeId != String <br>
+     * 
+     * @return String Request status message
+     */
     public String assignLocker() {
         String msg = "No se ha encontrado un jugador con la identificacion suministrada o aun no ha sido registrado en un equipo";
         System.out.println("Ingrese el identificador del jugador");
@@ -381,10 +462,30 @@ public class Menu {
     }
 
     /**
+     * Depending of the team, this method will show the line ups registered at the
+     * moment in it. <br>
+     * <b> post: </b> It will show the pertinent information for each registered
+     * line up br>
+     * 
+     * @return String Request status message
+     */
+    public String showLineUps() {
+        String msg = "No se ha encontrado un equipo con ese nombre en el club";
+        System.out.println("Ingrese el nombre del equipo a mostrar");
+        String teamName = sc.nextLine();
+        Team registeredTeam = footballClub.getTeam(teamName);
+        boolean existT = footballClub.searchTeam(teamName);
+        if (existT) {
+            msg = footballClub.showLineUps(registeredTeam);
+        }
+        return msg;
+    }
+
+    /**
      * Will execute the pertinent request of the user in the main menu <br>
      * 
      * @param choice Positive integer number which is diferent to String and 1 less
-     *               than or equal to choice less than or equal to 15 <br>
+     *               than or equal to choice less than or equal to 16 <br>
      */
     public void doOperation(int choice) {
         switch (choice) {
@@ -431,6 +532,9 @@ public class Menu {
                 System.out.println(assignLocker());
                 break;
             case 15:
+                System.out.println(showLineUps());
+                break;
+            case 16:
                 System.out.println("Gracias por utilizar nuestros servicios");
                 break;
             default:
@@ -439,7 +543,7 @@ public class Menu {
     }
 
     /**
-     * This method will display our main menu while option diferent of 15 at the
+     * This method will display our main menu while option diferent of 16 at the
      * same time of run our App <br>
      */
     public void startProgram() {
@@ -448,7 +552,7 @@ public class Menu {
             showMenu();
             option = readOption();
             doOperation(option);
-        } while (option != 15);
+        } while (option != 16);
     }
 
 }

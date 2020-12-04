@@ -17,6 +17,9 @@ public class FootballClub {
     private Player[][] dressingRoom1;
     private Player[][] dressingRoom2;
 
+    /**
+     * The constructor method of the Club Object<br>
+     */
     public FootballClub(String name, int nit, String fundationDate) {
         this.name = name;
         this.nit = nit;
@@ -28,30 +31,69 @@ public class FootballClub {
         dressingRoom2 = new Player[ROWS_SIZE_ROOM2][COLUMNS_SIZE_ROOM2];
     }
 
+    /**
+     * Gets the club Name <br>
+     * 
+     * @return name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Sets the club Name <br>
+     * 
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the club identification or nit <br>
+     * 
+     * @return nit
+     */
     public int getNit() {
         return this.nit;
     }
 
+    /**
+     * Sets the club identification or nit <br>
+     * 
+     * @param nit != String
+     */
     public void setNit(int nit) {
         this.nit = nit;
     }
 
+    /**
+     * Gets the fundation date of the club <br>
+     * 
+     * @return fundationDate
+     */
     public String getFundationDate() {
         return this.fundationDate;
     }
 
+    /**
+     * Sets the fundation date of the club <br>
+     * 
+     * @param fundationDate
+     */
     public void setFundationDate(String fundationDate) {
         this.fundationDate = fundationDate;
     }
 
+    /**
+     * Assigns an office to a coach registered in the club, following all security
+     * protocols (temperature taking and disinfection point) <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredCoach != null
+     * @return msg
+     */
     public String addCoachToOffice(Coach registeredCoach) {
         String msg = "No hay oficinas disponibles";
         boolean asigned = false;
@@ -77,6 +119,18 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Assigns a dressing room to a player registered at club, following all
+     * security protocols (temperature check and disinfection point). In addition to
+     * restricting access to players from different teams in the same dressing room
+     * <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredPlayer != null
+     * @param registeredTeam   != null
+     * @return msg
+     */
     public String addPlayerToDressing(Player registeredPlayer, Team registeredTeam) {
         String msg = "No hay camerinos disponibles";
         int render1 = 0;
@@ -136,6 +190,13 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * This method looks for a team in the club at the time of the iteration with
+     * the same name that is passed by parameter <br>
+     * 
+     * @param teamName
+     * @return existT
+     */
     public boolean searchTeam(String teamName) {
         boolean existT = false;
         for (int i = 0; i < team.length && !existT; i++) {
@@ -146,6 +207,13 @@ public class FootballClub {
         return existT;
     }
 
+    /**
+     * This method looks for an employee in the club at the time of the iteration
+     * with the same identification that is passed by parameter <br>
+     * 
+     * @param employeeId != String
+     * @return existE
+     */
     public boolean searchEmployee(int employeeId) {
         boolean existE = false;
         for (int i = 0; i < employee.size() && !existE; i++) {
@@ -157,6 +225,14 @@ public class FootballClub {
         return existE;
     }
 
+    /**
+     * Search a Player in a team depending of the id passed as a parameter <br>
+     * <b> post: </b> this method will return a team object with the player in it
+     * <br>
+     * 
+     * @param employeeId != String
+     * @return Team
+     */
     public Team searchPlayerInTeam(int employeeId) {
         boolean already = false;
         Team registeredTeam = null;
@@ -170,6 +246,12 @@ public class FootballClub {
         return registeredTeam;
     }
 
+    /**
+     * Gets an Employee object identified for its id <br>
+     * 
+     * @param employeeId != String
+     * @return registeredEmployee
+     */
     public Employee getEmployee(int employeeId) {
         Employee registeredEmployee = null;
         for (int i = 0; i < employee.size(); i++) {
@@ -181,6 +263,12 @@ public class FootballClub {
         return registeredEmployee;
     }
 
+    /**
+     * Gets a Player object identified for its id <br>
+     * 
+     * @param employeeId != String
+     * @return registeredPlayer
+     */
     public Player getPlayer(int employeeId) {
         Player registeredPlayer = null;
         for (int i = 0; i < employee.size(); i++) {
@@ -192,6 +280,12 @@ public class FootballClub {
         return registeredPlayer;
     }
 
+    /**
+     * Gets a Main coach object identified for its id <br>
+     * 
+     * @param employeeId != null
+     * @return registeredMainCoach
+     */
     public MainCoach getMainCoach(int employeeId) {
         MainCoach registeredMainCoach = null;
         for (int i = 0; i < employee.size(); i++) {
@@ -203,6 +297,12 @@ public class FootballClub {
         return registeredMainCoach;
     }
 
+    /**
+     * Gets an assistant coach object identified for its id <br>
+     * 
+     * @param employeeId != String
+     * @return registeredAsistantCoach
+     */
     public AsistantCoach getAssitantCoach(int employeeId) {
         AsistantCoach registeredAsistantCoach = null;
         for (int i = 0; i < employee.size(); i++) {
@@ -214,6 +314,12 @@ public class FootballClub {
         return registeredAsistantCoach;
     }
 
+    /**
+     * Gets a team object identified for its name <br>
+     * 
+     * @param teamName
+     * @return registeredTeam
+     */
     public Team getTeam(String teamName) {
         Team registeredTeam = null;
         boolean existT = false;
@@ -226,6 +332,21 @@ public class FootballClub {
         return registeredTeam;
     }
 
+    /**
+     * Hires a Player depending of the previously choosed option and if he meets the
+     * basic data required for said process <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param employeeName For better display in console avoid symbols or characters
+     *                     not recognized by the machine
+     * @param employeeId   != String
+     * @param salary       != String
+     * @param state        != String or int, have to be a boolean
+     * @param ShirtNumber  != String
+     * @param position     != String or int, have to be a Position type
+     * @return msg
+     */
     public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int ShirtNumber,
             Position position) {
         String msg = "Se ha contratado al nuevo jugador: " + employeeName + " exitosamente";
@@ -234,6 +355,22 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Hires a Main coach depending of the previously choosed option and if he meets
+     * the basic data required for said process <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param employeeName         for better display in console avoid symbols or
+     *                             characters not recognized by the machine
+     * @param employeeId           != String
+     * @param salary               != String
+     * @param state                != String or int, have to be a boolean
+     * @param achieveChampionships != String
+     * @param experienceYears      != String
+     * @param teamsInCharge        != String
+     * @return msg
+     */
     public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int achieveChampionships,
             int experienceYears, int teamsInCharge) {
         String msg = "Se ha contratado al nuevo entrenador principal: " + employeeName + " exitosamente";
@@ -243,6 +380,22 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Hires an Assistant coach depending of the previously choosed option and if he
+     * meets the basic data required for said process <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param employeeName       for better display in console avoid symbols or
+     *                           characters not recognized by the machine
+     * @param employeeId         != String
+     * @param salary             != String
+     * @param state              != String or int, have to be a boolean
+     * @param experienceYears    != String
+     * @param soccerProfessional != String or int, have to be a boolean
+     * @param expertise          != String or int, have to be a Expertise type
+     * @return msg
+     */
     public String hireEmployee(String employeeName, int employeeId, int salary, boolean state, int experienceYears,
             boolean soccerProfessional, Expertise expertise) {
         String msg = "Se ha contratado al nuevo entrenador asistente: " + employeeName + " exitosamente";
@@ -252,6 +405,14 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Fires an employee just with its identification <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param employeeId != String
+     * @return msg
+     */
     public String fireEmployee(int employeeId) {
         String msg = "";
         for (int i = 0; i < employee.size(); i++) {
@@ -265,6 +426,15 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Adds an employee in an specific team following all the conjectures <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredEmployee != null
+     * @param registeredTeam     != null
+     * @return msg
+     */
     public String addEmployeeToTeam(Employee registeredEmployee, Team registeredTeam) {
         String msg = "ERROR 404";
         if (registeredEmployee instanceof Player) {
@@ -280,6 +450,15 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Removes an identified employee in an specific team <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredEmployee != null
+     * @param registeredTeam     != null
+     * @return msg
+     */
     public String removeEmployeeFromTeam(Employee registeredEmployee, Team registeredTeam) {
         String msg = "";
         if (registeredEmployee instanceof Player) {
@@ -295,6 +474,18 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Sets the general information of a previously identified Employee <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredEmployee != null
+     * @param newName            for better display in console avoid symbols or
+     *                           characters not recognized by the machine
+     * @param newSalary          != String
+     * @param newStatus          != String or int, have to be a boolean
+     * @return msg
+     */
     public String setGeneralEmployeeInfo(Employee registeredEmployee, String newName, int newSalary,
             boolean newStatus) {
         String msg = "La informacion suministrada del empleado " + registeredEmployee.getEmployeeName()
@@ -305,6 +496,18 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Sets the particular information of a previously identified Player <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param regiteredPlayer != null
+     * @param ShirtNumber     != String
+     * @param scoredGoals     != String
+     * @param averageMark     != String, worth noting is a double
+     * @param position        != String and int have to be a Position type
+     * @return msg
+     */
     public String setParticularEmployeeInfo(Player regiteredPlayer, int ShirtNumber, int scoredGoals,
             double averageMark, Position position) {
         String msg = "La informacion suministrada del jugador " + regiteredPlayer.getEmployeeName()
@@ -316,6 +519,17 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Sets the particular information of a previously identified Main Coach <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredMainCoach  != null
+     * @param achieveChampionships != String
+     * @param experienceYears      != String
+     * @param teamsInCharge        != String
+     * @return msg
+     */
     public String setParticularEmployeeInfo(MainCoach registeredMainCoach, int achieveChampionships,
             int experienceYears, int teamsInCharge) {
         String msg = "La informacion suministrada del entrenador principal " + registeredMainCoach.getEmployeeName()
@@ -326,6 +540,18 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Sets the particular information of a previously identified Assistant Coach
+     * <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredAsistantCoach != null
+     * @param experienceYears         != String
+     * @param soccerProfessional      != String or int have to be a boolean
+     * @param expertise               != null
+     * @return msg
+     */
     public String setParticularEmployeeInfo(AsistantCoach registeredAsistantCoach, int experienceYears,
             boolean soccerProfessional, Expertise expertise) {
         String msg = "La informacion suministrada del entrenador asistente " + registeredAsistantCoach.getEmployeeName()
@@ -336,6 +562,10 @@ public class FootballClub {
         return msg;
     }
 
+    /**
+     * Is use for Calculating the market price and the level of Main coaches and
+     * Players <br>
+     */
     public void employeeCalculates() {
         for (int i = 0; i < employee.size(); i++) {
             Employee getEmployee = employee.get(i);
@@ -351,23 +581,41 @@ public class FootballClub {
         }
     }
 
+    /**
+     * Pass by parameter or cath the pertinent information for adding a line up in
+     * an specific team <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param registeredTeam != null
+     * @param lineUpDate     != "empty"
+     * @param tactic         != null
+     * @param formationA     for each line in the field write a - indicating another
+     *                       line in the same formation
+     * @return msg
+     */
     public String addLineUp(Team registeredTeam, String lineUpDate, Tactic tactic, String formationA) {
         int sumPlayers = 0;
         String msg = "Faltan o hay mas de 10 jugadores en la formacion ";
         String[] render = formationA.split("-");
         int[] binary = new int[render.length];
-        int size = 0;
         for (int i = 0; i < render.length; i++) {
             binary[i] = Integer.parseInt(render[i]);
             sumPlayers += Integer.parseInt(render[i]);
-            size++;
         }
         if (sumPlayers == 10) {
-            msg = registeredTeam.addLineup(lineUpDate, tactic, binary, size);
+            msg = registeredTeam.addLineup(lineUpDate, tactic, binary);
         }
         return msg;
     }
 
+    /**
+     * Show all the information of the teams registered in the club <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @return contents
+     */
     public String showTeams() {
         String contents = "";
         for (int i = 0; i < team.length; i++) {
@@ -376,6 +624,15 @@ public class FootballClub {
         return contents;
     }
 
+    /**
+     * Show the information of a team with the same name already passed as a
+     * parameter <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param teamName an String
+     * @return contents
+     */
     public String showParticularTeam(String teamName) {
         String contents = "";
         for (int i = 0; i < team.length; i++) {
@@ -386,6 +643,14 @@ public class FootballClub {
         return contents;
     }
 
+    /**
+     * Show all the information of the employees hired by the club in an instance of
+     * our app <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @return contents
+     */
     public String showEmployees() {
         String contents = "";
         if (employee.size() == 0) {
@@ -400,6 +665,15 @@ public class FootballClub {
         return contents;
     }
 
+    /**
+     * Show the information of a employee with the same identification already
+     * passed as a parameter <br>
+     * <b> post: </b> it will return a String message with the status of the user
+     * request <br>
+     * 
+     * @param employeeId != String
+     * @return contents
+     */
     public String showParticularEmployee(int employeeId) {
         String contents = "";
         if (employee.size() == 0) {
@@ -416,21 +690,40 @@ public class FootballClub {
         return contents;
     }
 
+    /**
+     * Show the information of the line ups in an specific tema already passed as a
+     * parameter <br>
+     * 
+     * @param registeredTeam != null
+     * @return contents
+     */
+    public String showLineUps(Team registeredTeam) {
+        String contents = registeredTeam.showLineUp();
+        return contents;
+    }
+
+    /**
+     * Shows all the information of the club including its employees, teams and
+     * installations. It is important to highlight that it meets one of the
+     * functional requirements <br>
+     * 
+     * @return contents
+     */
     public String showClub() {
         String contents = "*************** Club ****************\n";
         contents += "**Name: " + getName() + "\n";
         contents += "**Nit: " + getNit() + "\n";
         contents += "**Fundation Date: " + getFundationDate() + "\n";
+        for (int i = 0; i < employee.size(); i++) {
+            Employee registeredEmployee = employee.get(i);
+            contents += "**Employee " + (i + 1) + ":\n";
+            contents += registeredEmployee.showContents();
+        }
         for (int i = 0; i < team.length; i++) {
             if (team[i] != null) {
                 contents += "**Team " + (i + 1) + ":\n";
                 contents += team[i].showContents();
             }
-        }
-        for (int i = 0; i < employee.size(); i++) {
-            Employee registeredEmployee = employee.get(i);
-            contents += "**Employee " + (i + 1) + ":\n";
-            contents += registeredEmployee.showContents();
         }
         contents += "**Office sector\n";
         for (int i = 0; i < ORDER_OFFICES; i++) {
