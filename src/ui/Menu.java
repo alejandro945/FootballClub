@@ -268,7 +268,7 @@ public class Menu {
     /**
      * Its function is to update the general information of the identified user <br>
      * <b> pre: </b> employeeId != String <br>
-     * <b> post: <b> Updates the general information entered by the user in said
+     * <b> post: </b> Updates the general information entered by the user in said
      * iteration <br>
      * 
      * @return String Request status message
@@ -300,7 +300,7 @@ public class Menu {
      * Its function is to update the particular information of the identified user
      * <br>
      * <b> pre: </b> employeeId != String <br>
-     * <b> post: <b> Updates the particular information entered by the user in said
+     * <b> post: </b> Updates the particular information entered by the user in said
      * iteration. It should be noted that we use downcasting <br>
      * 
      * @return String Request status message
@@ -465,7 +465,7 @@ public class Menu {
      * Depending of the team, this method will show the line ups registered at the
      * moment in it. <br>
      * <b> post: </b> It will show the pertinent information for each registered
-     * line up br>
+     * line up <br>
      * 
      * @return String Request status message
      */
